@@ -8,22 +8,28 @@ const rock_div = document.getElementById("rock");
 const paper_div = document.getElementById("paper");
 const scissors_div = document.getElementById("scissors");
 
+function toCapitalize(word) {
+    if(word === 'rock') return "Rock";
+    if(word === 'paper') return "Paper";
+    if(word === 'scissors') return "Scissors";
+}
+
 function win(you, player2) {
     youScore++;
     youScore_span.textContent = youScore;
     player2Score_span.textContent = player2Score;
-    result_p.textContent = you + " beats " + player2 + ". You Win!!!"
+    result_p.textContent = toCapitalize(you) + " beats " + toCapitalize(player2) + ". You Win!!!"
 }
 
 function lose(you, player2) {
     player2Score++;
     player2Score_span.textContent = player2Score;
     youScore_span.textContent = youScore;
-    result_p.textContent = you + " loses to " + player2 + ". You Lost!!!"
+    result_p.textContent = toCapitalize(you) + " loses to " + toCapitalize(player2) + ". You Lost!!!"
 }
 
 function draw(you, player2) {
-    result_p.textContent = you + " equals " + player2 + ". It's a draw!!!"
+    result_p.textContent = toCapitalize(you) + " equals " + toCapitalize(player2) + ". It's a draw!!!"
 }
 
 function getP2Choice() {

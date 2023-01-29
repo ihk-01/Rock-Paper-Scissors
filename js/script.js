@@ -15,14 +15,21 @@ const player2Total_span = document.getElementById("player2Total");
 const rock_div = document.getElementById("rock");
 const paper_div = document.getElementById("paper");
 const scissors_div = document.getElementById("scissors");
+const resetBtnDisabled = document.getElementById("resetBtnDisabled");
+//let resetBtn = document.getElementById("resetBtn");
 
 
+//let disableBtn = () => {
+//    resetBtn.disabled = true;
+//}
+
+//Capitalizes the Choices in Results output.
 function toCapitalize(word) {
     if (word === 'rock') return "Rock";
     if (word === 'paper') return "Paper";
     if (word === 'scissors') return "Scissors";
 }
-
+//If you win, your score increases by 1, Round score is displayed, result of choice is displayed, and round number/# of rounds is displayed. Round increments by 1.
 function win(you, player2) {
     youScore++;
     youScore_span.textContent = youScore;
@@ -31,7 +38,7 @@ function win(you, player2) {
     currRound++
     round_label_div.textContent = `Round: ${currRound} / ${numRounds}`;
 }
-
+//If you lose, Player2 score increases by 1, Round score is displayed, result of choice is diplayed, and round number/#of rounds is displayed. Round increments by 1.
 function lose(you, player2) {
     player2Score++;
     player2Score_span.textContent = player2Score;
@@ -40,30 +47,20 @@ function lose(you, player2) {
     currRound++;
     round_label_div.textContent = `Round: ${currRound} / ${numRounds}`;
 }
-
+//If it is a draw, nobody's score increases. Round score remains the same, result of choice is displayed, and round number/#of rounds is displayed. Round increments by 1.
 function draw(you, player2) {
     result_p.textContent = toCapitalize(you) + " equals " + toCapitalize(player2) + ". It's a draw!!!"
     currRound++;
     round_label_div.textContent = `Round: ${currRound} / ${numRounds}`;
 }
-
+//Player 2 makes a random choice.
 function getP2Choice() {
     const choices = ['rock', 'paper', 'scissors'];
     const randomNumber = Math.floor(Math.random() * 3);
     return choices[randomNumber];
 
 }
-/*function roundTotal(you, player2) {
-    if (youScore > player2Score) {
-        youTotal++;
-    }
-    else if (youScore < player2Score) {
-        player2Total++;
-    }
-    youTotal.textContent = youTotal;
-    player2Total.textContent = player2Total;
-}*/
-
+//Executing the play function when choosing rock, paper, or scissors if event listener is on.
 const mainrock = () => {
     play("rock");
 }
@@ -75,14 +72,18 @@ const mainpaper = () => {
 const mainscissors = () => {
     play("scissors");
 }
+//After you click on a choice, the play function will be executed for that choice.
 function main() {
     rock_div.addEventListener('click', mainrock);
 
     paper_div.addEventListener('click', mainpaper);
 
     scissors_div.addEventListener('click', mainscissors);
+
 }
-function ResetGlobalVariables(){
+
+
+function resetGlobalVariables() {
     //list of all the variables with original attributes here
     youScore = 0;
     player2Score = 0;
@@ -94,14 +95,27 @@ function ResetGlobalVariables(){
     
     main();
 }
-
 function gameOver() {
     rock_div.removeEventListener('click', mainrock);
 
     paper_div.removeEventListener('click', mainpaper);
 
     scissors_div.removeEventListener('click', mainscissors);
+    
+   /* const disableBtn = () => {
+        resetBtn.disabled = false;
+        resetBtn.addEventListener('click', resetGlobalVariables);*/
+    
+        resetGlobalVariables();
+        
+/*    function activatePlay() {    
+      resetBtn.disabled = false;
+      resetBtn.addEventListener('click', activatePlay);
+    }*/
 }
+
+
+//The play function with an if/then scenario for each choice and a random choice by Player2.
 function play(youChoice) {
     const p2Choice = getP2Choice();
 
@@ -123,8 +137,9 @@ function play(youChoice) {
             break;
 
     }
+    //If your current rounds = the number of rounds you wanted to play, then game is over.
     if (currRound == numRounds) {
-        alert("That's how many rounds you wanted to play! Game over! Check out the Game Scoreboard below!");
+        alert("Game over: Click OK and check out the Game Scoreboard below! Two Games out of Three Wins!");
         if (youScore > player2Score) {
             youTotal++;
         }
@@ -151,8 +166,28 @@ function play(youChoice) {
 
             gameOver();
         }
+        
+        
     }
+
+
+
+
 }
+
+/*if (resetBtn) {
+    resetBtn.addEventListener("click", () =>
+      handleJSBtnClick(resetBtn)
+    );
+    
+//JS Click Handler
+const handleJSBtnClick = (resetBtn) => {
+    resetBtn.disabled = true;
+    console.log("JS Disabled");
+  };
+  }*/
+
+    
 
 main();
 

@@ -15,13 +15,9 @@ const player2Total_span = document.getElementById("player2Total");
 const rock_div = document.getElementById("rock");
 const paper_div = document.getElementById("paper");
 const scissors_div = document.getElementById("scissors");
-const resetBtnDisabled = document.getElementById("resetBtnDisabled");
-//let resetBtn = document.getElementById("resetBtn");
+const resetBtnDisabled = document.querySelector(".resetBtnDisabled");
 
 
-//let disableBtn = () => {
-//    resetBtn.disabled = true;
-//}
 
 //Capitalizes the Choices in Results output.
 function toCapitalize(word) {
@@ -84,6 +80,11 @@ function main() {
 
 
 function resetGlobalVariables() {
+
+    resetBtnDisabled.classList.toggle('resetBtnDisabled');
+    resetBtnDisabled.classList.toggle('resetBtn');
+    resetBtnDisabled.setAttribute('disabled', true);
+
     //list of all the variables with original attributes here
     youScore = 0;
     player2Score = 0;
@@ -92,6 +93,9 @@ function resetGlobalVariables() {
     numOfRounds = prompt('How many rounds will you play?',9);
     numRounds = (numOfRounds != 0) ? numOfRounds : 9;
     currRound = 0;
+
+    youTotal_span.textContent = youTotal;
+    player2Total_span.textContent = player2Total;
     
     main();
 }
@@ -102,16 +106,11 @@ function gameOver() {
 
     scissors_div.removeEventListener('click', mainscissors);
     
-   /* const disableBtn = () => {
-        resetBtn.disabled = false;
-        resetBtn.addEventListener('click', resetGlobalVariables);*/
-    
-        resetGlobalVariables();
-        
-/*    function activatePlay() {    
-      resetBtn.disabled = false;
-      resetBtn.addEventListener('click', activatePlay);
-    }*/
+    resetBtnDisabled.removeAttribute('disabled');
+    resetBtnDisabled.classList.toggle('resetBtnDisabled');
+    resetBtnDisabled.classList.toggle('resetBtn');
+
+
 }
 
 
@@ -171,23 +170,10 @@ function play(youChoice) {
     }
 
 
-
-
 }
 
-/*if (resetBtn) {
-    resetBtn.addEventListener("click", () =>
-      handleJSBtnClick(resetBtn)
-    );
-    
-//JS Click Handler
-const handleJSBtnClick = (resetBtn) => {
-    resetBtn.disabled = true;
-    console.log("JS Disabled");
-  };
-  }*/
 
-    
+resetBtnDisabled.addEventListener('click', resetGlobalVariables);  
 
 main();
 

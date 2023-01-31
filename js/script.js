@@ -5,6 +5,7 @@ let numRounds = (numOfRounds != 0) ? numOfRounds : 9;
 let currRound = 0;
 let youTotal = 0;
 let player2Total = 0;
+let currGame = 1;
 const round_label_div = document.getElementById("round-label");
 const result_p = document.querySelector(".result > p");
 const score_div = document.querySelector(".score");
@@ -16,6 +17,8 @@ const rock_div = document.getElementById("rock");
 const paper_div = document.getElementById("paper");
 const scissors_div = document.getElementById("scissors");
 const resetBtnDisabled = document.querySelector(".resetBtnDisabled");
+const gameNumber = document.getElementById("game-label");
+
 
 
 
@@ -70,6 +73,8 @@ const mainscissors = () => {
 }
 //After you click on a choice, the play function will be executed for that choice.
 function main() {
+    gameNumber.textContent = `Game: ${currGame}`;
+
     rock_div.addEventListener('click', mainrock);
 
     paper_div.addEventListener('click', mainpaper);
@@ -83,7 +88,7 @@ function resetGlobalVariables() {
 
     resetBtnDisabled.classList.toggle('resetBtnDisabled');
     resetBtnDisabled.classList.toggle('resetBtn');
-    resetBtnDisabled.setAttribute('disabled', false);
+    resetBtnDisabled.setAttribute('disabled', true);
 
     //list of all the variables with original attributes here
     youScore = 0;
@@ -93,26 +98,27 @@ function resetGlobalVariables() {
     numOfRounds = prompt('How many rounds will you play?',9);
     numRounds = (numOfRounds != 0) ? numOfRounds : 9;
     currRound = 0;
+    currGame = 1;
 
     youTotal_span.textContent = youTotal;
     player2Total_span.textContent = player2Total;
+    round_label_div.textContent = `Round: ${currRound} / ${numRounds}`;
+
     
     main();
 }
-function gameOver() {
+function gamesOver() {
     rock_div.removeEventListener('click', mainrock);
 
     paper_div.removeEventListener('click', mainpaper);
 
     scissors_div.removeEventListener('click', mainscissors);
     
-    resetBtnDisabled.removeAttribute('disabled', true);
+    resetBtnDisabled.removeAttribute('disabled');
     resetBtnDisabled.classList.toggle('resetBtnDisabled');
     resetBtnDisabled.classList.toggle('resetBtn');
 
-
 }
-
 
 //The play function with an if/then scenario for each choice and a random choice by Player2.
 function play(youChoice) {
@@ -135,10 +141,10 @@ function play(youChoice) {
             draw(youChoice, p2Choice);
             break;
 
-    }
+        }
     //If your current rounds = the number of rounds you wanted to play, then game is over.
     if (currRound == numRounds) {
-        alert("Game over: Click OK and check out the Game Scoreboard below! Two Games out of Three Wins!");
+        
         if (youScore > player2Score) {
             youTotal++;
         }
@@ -148,30 +154,41 @@ function play(youChoice) {
         youTotal_span.textContent = youTotal;
         player2Total_span.textContent = player2Total;
 
+        currGame++;
+        gameNumber.textContent = `Game: ${currGame}`;
+        display("Game over: Click OK and check out the Game Scoreboard below! Two Games out of Three Wins!");
+        
+
+
+        if (youTotal === 2) {
+
+            display("You won 2 out 3 games! You're the winner!");
+
+            gamesOver();
+        }
+
+        if (player2Total === 2) {
+            display("Player2 won 2 out of 3 games! You lost!");
+
+            gamesOver();
+        }
         currRound = 0;
         youScore = 0;
         player2Score = 0;
         youScore_span.textContent = youScore;
         player2Score_span.textContent = player2Score;
+        round_label_div.textContent = `Round: ${currRound} / ${numRounds}`;
 
-        if (youTotal === 2) {
-            alert("You won 2 out 3 games! You're the winner!");
-
-            gameOver();
-        }
-
-        if (player2Total === 2) {
-            alert("Player2 won 2 out of 3 games! You lost!");
-
-            gameOver();
-        }
-        
-        
     }
 
 
 }
 
+function display(message) {
+    setTimeout(function() {
+        alert(message);
+    },100)
+}
 
 resetBtnDisabled.addEventListener('click', resetGlobalVariables);  
 

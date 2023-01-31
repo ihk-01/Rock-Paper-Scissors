@@ -83,7 +83,7 @@ function resetGlobalVariables() {
 
     resetBtnDisabled.classList.toggle('resetBtnDisabled');
     resetBtnDisabled.classList.toggle('resetBtn');
-    resetBtnDisabled.setAttribute('disabled', true);
+    resetBtnDisabled.setAttribute('disabled', false);
 
     //list of all the variables with original attributes here
     youScore = 0;
@@ -106,7 +106,7 @@ function gameOver() {
 
     scissors_div.removeEventListener('click', mainscissors);
     
-    resetBtnDisabled.removeAttribute('disabled');
+    resetBtnDisabled.removeAttribute('disabled', true);
     resetBtnDisabled.classList.toggle('resetBtnDisabled');
     resetBtnDisabled.classList.toggle('resetBtn');
 
